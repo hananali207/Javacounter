@@ -23,9 +23,13 @@ public class Report {
 	private String dayOrNight;
 	private String street;
 	private String county;
+	private int year;
+    private int month;
+    private int day;
+	
 
 	public Report(String state, int severity, double visibility, String weatherCondition, String startTime,
-			String endTime, String city, String street, String county) {
+			String endTime, String city, String street, String county, int year, int month, int day) {
 		this.state = state;
 		this.severity = severity;
 		this.visibility = visibility;
@@ -35,6 +39,9 @@ public class Report {
 		this.city = city;
 		this.setStreet(street);
 		this.county = county;
+		this.year = year;
+        this.month = month;
+        this.day = day;
 	}
 	
 
@@ -81,6 +88,17 @@ public class Report {
 	public String getCity() {
 		return city;
 	}
+	public int getYear() {
+        return year;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public int getDay() {
+        return day;
+    }
 
 	/**
 	 * Read reports from a CSV file and create an array of Report objects.
@@ -112,13 +130,16 @@ public class Report {
 					String county = values[6].trim();
 
 					String dateTimeString = values[2].trim();
+					int year = Integer.parseInt(dateTimeString.substring(0, 4));
+                    int month = Integer.parseInt(dateTimeString.substring(5, 7));
+                    int day = Integer.parseInt(dateTimeString.substring(8, 10));
 
 					LocalDateTime dateTime = parseDateTime(dateTimeString);
 
 					String dayOrNight = values[values.length - 1].trim();
 
 					Report report = new Report(state, severity, visibility, weatherCondition, startTime, endTime, city,
-							street, county);
+							street, county, year, month, day);
 					report.setDateTime(dateTime);
 					report.setDayOrNight(dayOrNight);
 
@@ -194,6 +215,7 @@ public class Report {
 	            ", county '" + county + '\'' +
 	            '}';
 	}
+
 
 
 }
