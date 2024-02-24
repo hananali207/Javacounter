@@ -23,13 +23,11 @@ public class Report {
 	private String dayOrNight;
 	private String street;
 	private String county;
-	private int year;
-    private int month;
-    private int day;
+	private int daysSinceCE;
 	
 
 	public Report(String state, int severity, double visibility, String weatherCondition, String startTime,
-			String endTime, String city, String street, String county, int year, int month, int day) {
+			String endTime, String city, String street, String county, int daysSinceCE) {
 		this.state = state;
 		this.severity = severity;
 		this.visibility = visibility;
@@ -39,9 +37,7 @@ public class Report {
 		this.city = city;
 		this.setStreet(street);
 		this.county = county;
-		this.year = year;
-        this.month = month;
-        this.day = day;
+		this.daysSinceCE = daysSinceCE;
 	}
 	
 
@@ -88,17 +84,11 @@ public class Report {
 	public String getCity() {
 		return city;
 	}
-	public int getYear() {
-        return year;
+	public int getDaysSinceCE() {
+        return daysSinceCE;
     }
 
-    public int getMonth() {
-        return month;
-    }
-
-    public int getDay() {
-        return day;
-    }
+  
 
 	/**
 	 * Read reports from a CSV file and create an array of Report objects.
@@ -128,20 +118,9 @@ public class Report {
 					String city = values[5].trim();
 					String street = values[4].trim();
 					String county = values[6].trim();
-
-					String dateTimeString = values[2].trim();
-					int year = Integer.parseInt(dateTimeString.substring(0, 4));
-                    int month = Integer.parseInt(dateTimeString.substring(5, 7));
-                    int day = Integer.parseInt(dateTimeString.substring(8, 10));
-
-					LocalDateTime dateTime = parseDateTime(dateTimeString);
-
-					String dayOrNight = values[values.length - 1].trim();
-
+					
 					Report report = new Report(state, severity, visibility, weatherCondition, startTime, endTime, city,
-							street, county, year, month, day);
-					report.setDateTime(dateTime);
-					report.setDayOrNight(dayOrNight);
+							street, county, parseDaysSinceCE(startTime));
 
 					if (index == reports.length) {
 						reports = Arrays.copyOf(reports, reports.length * 2 + 1);
@@ -163,23 +142,16 @@ public class Report {
 	 * Parse date-time string in the format into LocalDateTime.
 	 *
 	 * @param dateTimeString The date-time string to parse.
+	 * @return 
 	 * @return LocalDateTime object if parsing is successful, or null if an error
 	 *         occurs.
 	 */
-	private static LocalDateTime parseDateTime(String dateTimeString) {
-		try {
+	private static int parseDaysSinceCE(String dateTimeString) {
 			int year = Integer.parseInt(dateTimeString.substring(0, 4));
 			int month = Integer.parseInt(dateTimeString.substring(5, 7));
 			int day = Integer.parseInt(dateTimeString.substring(8, 10));
-			int hour = Integer.parseInt(dateTimeString.substring(11, 13));
-			int minute = Integer.parseInt(dateTimeString.substring(14, 16));
-			int second = Integer.parseInt(dateTimeString.substring(17, 19));
-
-			return LocalDateTime.of(year, month, day, hour, minute, second);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
+			int daysSinceCE = (year * 365)+(month * 32) + day;
+			return daysSinceCE;
 	}
 
 	public void setDateTime(LocalDateTime dateTime) {
