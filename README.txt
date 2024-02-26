@@ -1,6 +1,6 @@
 README
 
-Hanan Ali- Wrote the file reading method and created the report class. Did the first draft of the minimum counters needed method. Wrote the main() method.
+Hanan Ali- Wrote the file reading method and created the report class. Did the first draft of the minimum counters needed method. Wrote the main() method. Wrote the method for testing the code.
 
 Jason Pichette- Project lead, designed the final solution. Wrote the Accident Queue class and tweaked the counters needed method. 
  
