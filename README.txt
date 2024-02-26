@@ -1,4 +1,10 @@
 README
+
+Hanan Ali- Wrote the file reading method and created the report class. Did the first draft of the minimum counters needed method. Wrote the main() method.
+
+Jason Pichette- Project lead, designed the final solution. Wrote the Accident Queue class and tweaked the counters needed method. 
+ 
+
 Program4: The .java file which contains the main method. This file uses the other classes and solves the minimum counter problem for the given counties. 
 AccidentQueue: A java class which implements the Queue interface to create a Queue containing Report Objects. 
 Report: A class which adds Report objects, designed to contain the information read from the provided accidents.csv file. Each Report object represents an accident report. 
