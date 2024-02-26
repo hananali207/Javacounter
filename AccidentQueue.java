@@ -19,7 +19,7 @@ public class AccidentQueue implements Queue<Report>{
 	
 	@Override
 	public int size() {
-		return (tail-head) & (elements.length - 1);
+        return (tail - head + elements.length) % elements.length;
 	}
 
 	@Override
@@ -166,18 +166,15 @@ public class AccidentQueue implements Queue<Report>{
 		return null;
 	}
 	
-	public void resize(int newSize) {
-		Report[] tempArr = (Report[]) new Report[newSize];
-		int current = head;
-		int currentSize = this.size();
-		for(int i = 0; i < currentSize; i++) {
-			tempArr[i] = elements[current];
-			current = (current + 1) % currentSize;
-		}
-		elements = tempArr;
-		head = 0;
-		tail = currentSize;
-		
-	}
+	private void resize(int newSize) {
+        Report[] newArray = new Report[newSize];
+        for (int i = 0, j = head; i < size(); i++, j = (j + 1) % elements.length) {
+            newArray[i] = elements[j];
+        }
+        elements = newArray;
+        head = 0;
+        tail = size();
+    }
 
 }
+
